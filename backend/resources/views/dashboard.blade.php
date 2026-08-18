@@ -1,0 +1,1 @@
+@extends('layouts.app') @section('content')<div class="card"><h1>Dashboard SIMAD</h1><p>Sistem Administrasi Perkantoran berbasis Laravel + MySQL</p></div><div class="grid">@foreach($stats as $label=>$value)<div class="card"><small>{{ $label }}</small><h2>{{ $value }}</h2></div>@endforeach</div>@endsection
