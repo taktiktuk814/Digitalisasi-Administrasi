@@ -1,0 +1,5 @@
+@extends('layouts.app') @section('content')
+<div class="card"><h2>Daftar Pegawai</h2><form><input name="q" value="{{ $q }}" placeholder="Cari NIP, nama, jabatan atau unit kerja..."></form><br><a class="btn primary" href="{{ route('pegawai.create') }}">+ Tambah Pegawai</a></div>
+<div class="card"><table><tr><th>NIP</th><th>Nama</th><th>Pangkat/Golongan</th><th>Jabatan</th><th>Unit Kerja</th><th>Status</th><th>Aksi</th></tr>
+@forelse($pegawai as $p)<tr><td>{{ $p->nip }}</td><td>{{ $p->nama_lengkap }}</td><td>{{ $p->pangkat_golongan }}</td><td>{{ $p->jabatan }}</td><td>{{ $p->unit_kerja }}</td><td>{{ $p->status_kepegawaian }}</td><td><a href="{{ route('pegawai.show',$p) }}">Arsip</a> | <a href="{{ route('pegawai.edit',$p) }}">Edit</a> <form style="display:inline" method="post" action="{{ route('pegawai.destroy',$p) }}">@csrf @method('DELETE')<button class="btn danger" onclick="return confirm('Hapus pegawai ini?')">Hapus</button></form></td></tr>
+@empty<tr><td colspan="7">Belum ada data pegawai.</td></tr>@endforelse</table>{{ $pegawai->links() }}</div>@endsection
