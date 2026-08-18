@@ -19,7 +19,12 @@ class ArsipController extends Controller
         return view('arsip.index',compact('data','q'));
     }
 
-    public function create(){return view('arsip.form',['item'=>new Arsip,'pegawai'=>Pegawai::orderBy('nama')->get()]);}
+    public function create(Request $r)
+    {
+        $item=new Arsip();
+        $item->pegawai_nip=$r->query('pegawai_nip');
+        return view('arsip.form',['item'=>$item,'pegawai'=>Pegawai::orderBy('nama')->get()]);
+    }
 
     public function store(Request $r)
     {
