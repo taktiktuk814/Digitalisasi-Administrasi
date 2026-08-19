@@ -1,0 +1,31 @@
+CREATE DATABASE IF NOT EXISTS simad CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE simad;
+
+CREATE TABLE IF NOT EXISTS barang_habis_pakai (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  kode VARCHAR(50) NOT NULL UNIQUE,
+  nama VARCHAR(150) NOT NULL,
+  kategori VARCHAR(100) NOT NULL,
+  satuan VARCHAR(30) NOT NULL,
+  stok_awal INT NOT NULL DEFAULT 0,
+  stok_minimum INT NOT NULL DEFAULT 0,
+  lokasi VARCHAR(150) NOT NULL,
+  keterangan TEXT NULL,
+  created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS mutasi_barang (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  barang_id BIGINT UNSIGNED NOT NULL,
+  jenis ENUM('masuk','keluar') NOT NULL,
+  tanggal DATE NOT NULL,
+  jumlah INT NOT NULL,
+  dokumen VARCHAR(100) NOT NULL,
+  petugas VARCHAR(150) NOT NULL,
+  keterangan TEXT NULL,
+  created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_mutasi_barang FOREIGN KEY (barang_id) REFERENCES barang_habis_pakai(id) ON DELETE CASCADE,
+  INDEX idx_mutasi_barang (barang_id),
+  INDEX idx_mutasi_tanggal (tanggal)
+) ENGINE=InnoDB;
